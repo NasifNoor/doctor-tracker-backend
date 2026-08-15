@@ -97,7 +97,7 @@ MongoDB can run locally or be hosted remotely.
 ### 1. Clone the repository
 
 ```bash
-git clone <YOUR_BACKEND_REPOSITORY_URL>
+git clone https://github.com/NasifNoor/doctor-tracker-backend.git
 cd doctor-tracker-backend
 ```
 
