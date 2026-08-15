@@ -648,7 +648,7 @@ It communicates with this backend through REST APIs.
 Replace this placeholder with the actual frontend repository URL:
 
 ```text
-<YOUR_FRONTEND_REPOSITORY_URL>
+https://github.com/NasifNoor/doctor-tracker-frontend.git
 ```
 
 ---
