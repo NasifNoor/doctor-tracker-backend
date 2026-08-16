@@ -556,7 +556,6 @@ This approach reduces unnecessary data transfer and application-side processing 
 | `MONGODB_URI`  | MongoDB connection string | `mongodb://127.0.0.1:27017/doctor-tracker` |
 | `JWT_SECRET`   | JWT signing secret        | `your-secret`                              |
 | `FRONTEND_URL` | Frontend origin for CORS  | `http://localhost:3000`                    |
-| `NODE_ENV`     | Application environment   | `development`                              |
 
 ---
 
