@@ -116,7 +116,6 @@ PORT=5000
 MONGODB_URI=mongodb+srv://nasifworkstation_db_user:nuqX2vF42ZrRkpFl@doctor-tracker.ups5pv0.mongodb.net/doctor-tracker?appName=doctor-tracker
 JWT_SECRET=2580eaada428dfe1fca39cf92c60b308a47384b96e5cf44010bb1b4a85c4c0a0
 FRONTEND_URL=http://localhost:3000
-NODE_ENV=development
 ```
 
 Never commit the real `.env` file.
@@ -128,7 +127,6 @@ PORT=5000
 MONGODB_URI=
 JWT_SECRET=
 FRONTEND_URL=http://localhost:3000
-NODE_ENV=development
 ```
 
 ---
