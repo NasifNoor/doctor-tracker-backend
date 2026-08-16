@@ -93,9 +93,8 @@ export const getPatients = async (req, res) => {
     }
 
     if (condition) {
-      filter.condition = condition;
+      filter.condition = new RegExp(condition.trim(), "i");
     }
-
     if (search) {
       const searchRegex = new RegExp(search.trim(), "i");
 
