@@ -31,12 +31,5 @@ app.use("/api/auth", authRoutes);
 app.use("/api/doctors", doctorRoutes);
 app.use("/api/patients", patientRoutes);
 app.use("/api/dashboard", dashboardRoutes);
-app.get("/api/test-auth", authenticate, (req, res) => {
-  res.json({
-    success: true,
-    message: "You are authenticated",
-    user: req.user,
-  });
-});
 
 export default app;

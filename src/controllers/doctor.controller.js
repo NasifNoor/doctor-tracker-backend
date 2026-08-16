@@ -1,4 +1,6 @@
 import { Doctor } from "../models/Doctor.js";
+import { Patient } from "../models/Patient.js";
+import mongoose from "mongoose";
 
 export const createDoctor = async (req, res) => {
   try {
@@ -229,6 +231,141 @@ export const deleteDoctor = async (req, res) => {
     return res.status(400).json({
       success: false,
       message: "Invalid doctor ID",
+    });
+  }
+};
+
+export const getDoctorPatients = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid doctor ID",
+      });
+    }
+
+    const doctor = await Doctor.findById(id).select(
+      "name specialization hospital",
+    );
+
+    if (!doctor) {
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
+
+    const patients = await Patient.find({
+      doctorId: id,
+    })
+      .sort({ createdAt: -1 })
+      .lean();
+
+    return res.status(200).json({
+      success: true,
+      doctor,
+      patients,
+    });
+  } catch (error) {
+    console.error("Get doctor patients error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch doctor patients",
+    });
+  }
+};
+
+//no need
+export const addDoctorPatient = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid doctor ID",
+      });
+    }
+
+    const doctor = await Doctor.findById(id).select("_id");
+
+    if (!doctor) {
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not found",
+      });
+    }
+
+    const { name, age, gender, phone, email, condition } = req.body;
+
+    if (!name || age === undefined || !gender || !phone || !condition) {
+      return res.status(400).json({
+        success: false,
+        message: "Name, age, gender, phone, and condition are required",
+      });
+    }
+
+    const patient = await Patient.create({
+      doctorId: id,
+      name,
+      age,
+      gender,
+      phone,
+      email: email?.toLowerCase().trim(),
+      condition,
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Patient added to doctor successfully",
+      patient,
+    });
+  } catch (error) {
+    console.error("Add doctor patient error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to add patient",
+    });
+  }
+};
+
+export const deleteDoctorPatient = async (req, res) => {
+  try {
+    const { id, patientId } = req.params;
+
+    if (!mongoose.isValidObjectId(id) || !mongoose.isValidObjectId(patientId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid doctor or patient ID",
+      });
+    }
+
+    const patient = await Patient.findOneAndDelete({
+      _id: patientId,
+      doctorId: id,
+    });
+
+    if (!patient) {
+      return res.status(404).json({
+        success: false,
+        message: "Patient not found for this doctor",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Patient removed from doctor successfully",
+    });
+  } catch (error) {
+    console.error("Delete doctor patient error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Failed to remove patient",
     });
   }
 };

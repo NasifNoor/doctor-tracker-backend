@@ -64,7 +64,15 @@ export const createPatient = async (req, res) => {
 
 export const getPatients = async (req, res) => {
   try {
-    const { page = 1, limit = 10, search, condition, doctorId } = req.query;
+    const {
+      page = 1,
+      limit = 10,
+      search,
+      condition,
+      doctorId,
+      from = "",
+      to = "",
+    } = req.query;
 
     const pageNumber = Math.max(Number(page) || 1, 1);
     const limitNumber = Math.min(Math.max(Number(limit) || 10, 1), 100);
@@ -96,6 +104,17 @@ export const getPatients = async (req, res) => {
         { email: searchRegex },
         { phone: searchRegex },
       ];
+    }
+    if (from || to) {
+      filter.createdAt = {};
+
+      if (from) {
+        filter.createdAt.$gte = new Date(`${from}T00:00:00.000Z`);
+      }
+
+      if (to) {
+        filter.createdAt.$lte = new Date(`${to}T23:59:59.999Z`);
+      }
     }
 
     const [patients, total] = await Promise.all([
