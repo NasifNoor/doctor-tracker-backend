@@ -161,10 +161,9 @@ npm start
 
 ## Database Seeding
 
-The project includes a seed script for development/testing data.
-The project uses MongoDB Atlas, so no local MongoDB installation is required. Configure the provided MongoDB Atlas connection string in your .env file, then run the seed script to populate the database with sample data.
+The project uses MongoDB Atlas, so no local MongoDB installation is required. Configure the provided MongoDB Atlas connection string in your .env file. The database already contains sample data, which you can use for testing. I have also included a seed script to generate fresh sample data if needed.
 
-Run:
+To seed the database, run:
 
 ```bash
 npm run seed
